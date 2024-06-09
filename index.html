@@ -188,8 +188,8 @@
                                         <div class="_countdown__divider_1yske_23">:</div>
                                         <div>
                                             <div class="_countdown__digits_1yske_29">
-                                                <div class="_countdown__digit_1yske_29">3</div>
-                                                <div class="_countdown__digit_1yske_29">4</div>
+                                                <div class="_countdown__digit_1yske_29" id="minuteTens1">3</div>
+                                                <div class="_countdown__digit_1yske_29" id="minuteOnes1">4</div>
                                             </div>
                                             <div class="_countdown__type_1yske_50">Minutes</div>
                                         </div>
@@ -265,8 +265,8 @@
                                         <div class="_countdown__divider_1yske_23">:</div>
                                         <div>
                                             <div class="_countdown__digits_1yske_29">
-                                                <div class="_countdown__digit_1yske_29">3</div>
-                                                <div class="_countdown__digit_1yske_29">4</div>
+                                                <div class="_countdown__digit_1yske_29" id="minuteTens2">3</div>
+                                                <div class="_countdown__digit_1yske_29" id="minuteOnes2">4</div>
                                             </div>
                                             <div class="_countdown__type_1yske_50">Minutes</div>
                                         </div>
@@ -342,8 +342,8 @@
                                         <div class="_countdown__divider_1yske_23">:</div>
                                         <div>
                                             <div class="_countdown__digits_1yske_29">
-                                                <div class="_countdown__digit_1yske_29">3</div>
-                                                <div class="_countdown__digit_1yske_29">4</div>
+                                                <div class="_countdown__digit_1yske_29" id="minuteTens3">3</div>
+                                                <div class="_countdown__digit_1yske_29" id="minuteOnes3">4</div>
                                             </div>
                                             <div class="_countdown__type_1yske_50">Minutes</div>
                                         </div>
@@ -389,22 +389,84 @@
     </script> 
     
     <script>
-        document.getElementById('surveyButton').addEventListener('click', function() {
+document.getElementById('surveyButton').addEventListener('click', function() {
     document.getElementById('popup').style.display = 'flex';
 });
 
 document.getElementById('submitButton').addEventListener('click', function() {
     const selectedCountry = document.getElementById('countrySelect').value;
     if (selectedCountry === 'germany') {
-        window.location.href = 'SurveyGermany.html';
+        window.location.href = 'germany.html';
     } else if (selectedCountry === 'sweden') {
-        window.location.href = 'SurveySweden.html';
-    } else if (selectedCountry === 'nethelands') {
-        window.location.href = 'SurveyNethelands.html';
+        window.location.href = 'sweden.html';
     } else {
         alert('Please select a country');
     }
 });
+
+// Add event listener to close the popup when clicking outside of it
+document.getElementById('popup').addEventListener('click', function(event) {
+    if (event.target === this) {
+        this.style.display = 'none';
+    }
+});
+
+    </script>
+
+    <script>
+            // Function to update a single minute counter
+    function updateMinuteCounter(tensElement, onesElement) {
+      // Parse the current values
+      let tens = parseInt(tensElement.textContent);
+      let ones = parseInt(onesElement.textContent);
+
+      // Increment the minute ones
+      ones += 1;
+
+      // Check if we need to increment the tens
+      if (ones === 10) {
+        ones = 0;
+        tens += 1;
+      }
+
+      // Reset to 00 after reaching 59
+      if (tens === 6 && ones === 0) {
+        tens = 0;
+        ones = 0;
+      }
+
+      // Update the display
+      tensElement.textContent = tens;
+      onesElement.textContent = ones;
+    }
+
+    // Initialize and update multiple counters
+    function initializeAndStartCounters() {
+      const counters = [
+        {tens: 'minuteTens1', ones: 'minuteOnes1'},
+        {tens: 'minuteTens2', ones: 'minuteOnes2'},
+        {tens: 'minuteTens3', ones: 'minuteOnes3'},
+        // Add more counters here if needed
+      ];
+
+      // Initialize counters to start from 34
+      counters.forEach(counter => {
+        document.getElementById(counter.tens).textContent = '3';
+        document.getElementById(counter.ones).textContent = '4';
+      });
+
+      // Update the counters every second
+      setInterval(() => {
+        counters.forEach(counter => {
+          const tensElement = document.getElementById(counter.tens);
+          const onesElement = document.getElementById(counter.ones);
+          updateMinuteCounter(tensElement, onesElement);
+        });
+      }, 60000); // 1000 milliseconds = 1 second
+    }
+
+    // Start the counters
+    initializeAndStartCounters();
     </script>
     </body>     
 </html>
