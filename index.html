@@ -57,7 +57,7 @@
                     <option value="" disabled selected>Select your country</option>
                     <option value="germany">Germany</option>
                     <option value="sweden">Sweden</option>
-                    <option value="nethelands">Nethelands</option>
+                    <option value="netherlands">Netherlands</option>
                 </select>
                 <button id="submitButton">Submit</button>
             </div>
@@ -348,7 +348,7 @@
                                             <div class="_countdown__type_1yske_50">Minutes</div>
                                         </div>
                                     </div>
-                                    <div class="MuiTypography-root MuiTypography-subtitle1 css-dmxir2" id="date2">Until </div>
+                                    <div class="MuiTypography-root MuiTypography-subtitle1 css-dmxir2" id="date3">Until </div>
                                     <div class="MuiBox-root css-0"> 
                                         <a><button id="surveyButton" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-fullWidth css-vf36pj" tabindex="0" type="button">Participate
                                                 <span class="MuiTouchRipple-root css-w0pj6f"></span> 
@@ -396,9 +396,11 @@ document.getElementById('surveyButton').addEventListener('click', function() {
 document.getElementById('submitButton').addEventListener('click', function() {
     const selectedCountry = document.getElementById('countrySelect').value;
     if (selectedCountry === 'germany') {
-        window.location.href = 'germany.html';
+        window.location.href = 'SurveyGermany.html';
     } else if (selectedCountry === 'sweden') {
-        window.location.href = 'sweden.html';
+        window.location.href = 'SurveySweden.html';
+    } else if (selectedCountry === 'netherlands') {
+        window.location.href = 'SurveyNetherlands.html';
     } else {
         alert('Please select a country');
     }
@@ -414,25 +416,26 @@ document.getElementById('popup').addEventListener('click', function(event) {
     </script>
 
     <script>
-            // Function to update a single minute counter
+    // Function to update a single minute counter
     function updateMinuteCounter(tensElement, onesElement) {
       // Parse the current values
       let tens = parseInt(tensElement.textContent);
       let ones = parseInt(onesElement.textContent);
 
-      // Increment the minute ones
-      ones += 1;
+      // Decrement the minute ones
+      ones -= 1;
 
-      // Check if we need to increment the tens
-      if (ones === 10) {
-        ones = 0;
-        tens += 1;
+      // Check if we need to decrement the tens
+      if (ones === -1) {
+        ones = 9;
+        tens -= 1;
       }
 
-      // Reset to 00 after reaching 59
-      if (tens === 6 && ones === 0) {
-        tens = 0;
-        ones = 0;
+      // Stop at 00
+      if (tens === 0 && ones === 0) {
+        tensElement.textContent = tens;
+        onesElement.textContent = ones;
+        return;
       }
 
       // Update the display
